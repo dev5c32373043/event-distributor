@@ -27,7 +27,7 @@ Upon completion of the transport process, the service returns a response detaili
 ## Getting started
 
 To start the project install all dependencies in requirements section.
-Add `.env` file in each project (`.env.example` as an example)
+Add `.env` file (`.env.example` as an example)
 
 Install npm packages:
 
