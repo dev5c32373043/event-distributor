@@ -1,19 +1,27 @@
 export function all(possibleDestinations) {
-  const matched = possibleDestinations.reduce((acc, dest) => {
-    for (const key in dest) {
-      const value = dest[key];
+  const { included } = possibleDestinations.reduce(
+    (acc, destination) => {
+      for (const key in destination) {
+        if (acc.excluded.has(key)) {
+          continue;
+        }
 
-      if (value && !acc.has(key)) {
-        acc.add(key);
+        const value = destination[key];
+
+        if (value && !acc.included.has(key)) {
+          acc.included.add(key);
+        }
+
+        if (!value) {
+          acc.excluded.add(key);
+          acc.included.delete(key);
+        }
       }
 
-      if (!value && acc.has(key)) {
-        acc.delete(key);
-      }
-    }
+      return acc;
+    },
+    { included: new Set([]), excluded: new Set([]) }
+  );
 
-    return acc;
-  }, new Set([]));
-
-  return Array.from(matched);
+  return Array.from(included);
 }
